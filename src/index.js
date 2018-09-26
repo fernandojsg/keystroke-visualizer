@@ -77,7 +77,15 @@ class KeystrokeVisualizer {
           'Alt': '⌥',
           'Backspace': '⌫',
           'Meta': '⌘',
-          'Shift': '⇧'
+          'Shift': '⇧',
+          'Control': '⌃',
+          'CapsLock': '⇪',
+          'Escape': '⎋',
+          'Tab': '⇥',
+          'PageDown': '⇟',
+          'PageUp': '⇞',
+          'Home': '↖',
+          'End': '↘'
         };
         
         return conversion[key] ||key;
