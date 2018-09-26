@@ -4,7 +4,8 @@
   "description": "Keystroke visualizer",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "cross-env NODE_ENV=production rollup -c",
+    "dev": "concurrently --names \"ROLLUP,SERVER\" -c \"bgGreen.bold,bgBlue.bold\" \"rollup -c -w -m inline\" \"http-server\""
   },
   "repository": {
     "type": "git",
@@ -18,5 +19,18 @@
   "bugs": {
     "url": "https://github.com/fernandojsg/keystroke-visualizer/issues"
   },
-  "homepage": "https://github.com/fernandojsg/keystroke-visualizer#readme"
+  "homepage": "https://github.com/fernandojsg/keystroke-visualizer#readme",
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "concurrently": "^4.0.1",
+    "cross-env": "^5.2.0",
+    "rollup": "^0.66.2",
+    "rollup-plugin-babel": "^4.0.3",
+    "rollup-plugin-cleanup": "^3.0.0",
+    "rollup-plugin-commonjs": "^9.1.8",
+    "rollup-plugin-node-resolve": "^3.4.0"
+  },
+  "dependencies": {
+    "useragent-info": "^1.0.0"
+  }
 }
