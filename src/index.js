@@ -1,5 +1,3 @@
-import useragentInfo from 'useragent-info';
-
 const DEFAULT_OPTIONS = {
   fontSize: 16,
   keyStrokeDelay: 200, // Time before the line breaks
@@ -7,6 +5,9 @@ const DEFAULT_OPTIONS = {
   fadeDuration: 1000,
   bezelColor: '#000',
   textColor: '#fff',
+  unmodifiedKey: true, // If pressing Alt+e show e, instead of €
+  showSymbol: true, // Convert ArrowLeft on ->
+  appendModifiers: {Meta: true, Alt: true, Shift: false}, // Append modifier to key all the time
   position: 'bottom-left' // bottom-left, bottom-right, top-left, top-right
 };
 
@@ -83,43 +84,62 @@ class KeystrokeVisualizer {
     document.body.appendChild(this.style);
   }
 
+  convertKeyToSymbol(key) {
+    const conversionCommon = {
+      'ArrowRight': '→',
+      'ArrowLeft': '←',
+      'ArrowUp': '↑',
+      'ArrowDown': '↓',
+      ' ': '␣',
+      'Enter': '↩',
+      'Shift': '⇧',
+      'ShiftRight': '⇧',
+      'ShiftLeft': '⇧',
+      'Control': '⌃',
+      'Tab': '↹',
+      'CapsLock': '⇪'
+    };
+
+    const conversionMac = {
+      'Alt': '⌥',
+      'AltLeft': '⌥',
+      'AltRight': '⌥',
+      'Delete': '⌦',
+      'Escape': '⎋',
+      'Backspace': '⌫',
+      'Meta': '⌘',
+      'Tab': '⇥',
+      'PageDown': '⇟',
+      'PageUp': '⇞',
+      'Home': '↖',
+      'End': '↘'
+    };
+
+    return (navigator.platform === 'MacIntel' ? conversionMac[key] : null ) || conversionCommon[key] || key;
+  }
+
   keydown(e) {
     if (!this.currentChunk) {
       this.currentChunk = document.createElement('li');
       this.container.appendChild(this.currentChunk);
     }
-
-    var mac = useragentInfo().platform === 'Mac';
-
-    function convert(key) {
-      const conversionCommon = {
-        'ArrowRight': '→',
-        'ArrowLeft': '←',
-        'ArrowUp': '↑',
-        'ArrowDown': '↓',
-        ' ': '␣',
-        'Enter': '↩',
-        'Shift': '⇧',
-        'Control': '⌃',
-        'Tab': '↹',
-        'CapsLock': '⇪'
-      };
-
-      const conversionMac = {
-        'Alt': '⌥',
-        'Backspace': '⌫',
-        'Meta': '⌘',
-        'Tab': '⇥',
-        'PageDown': '⇟',
-        'PageUp': '⇞',
-        'Home': '↖',
-        'End': '↘'
-      };
-
-      return (mac ? conversionMac[key] : null ) || conversionCommon[key] || key;
-    }
     
-    this.currentChunk.textContent += convert(e.key);
+    var key = e.key;
+    if (this.options.unmodifiedKey) {
+      if (e.code.indexOf('Key') !== -1) {
+        key = e.code.replace('Key', '');
+        if (!e.shiftKey) {
+          key = key.toLowerCase();
+        }
+      }
+    }
+
+    var modifier = '';
+    
+    if (this.options.appendModifiers.Meta && e.metaKey && e.key !== 'Meta') { modifier += this.convertKeyToSymbol('Meta'); }
+    if (this.options.appendModifiers.Alt && e.altKey && e.key !== 'Alt') { modifier += this.convertKeyToSymbol('Alt'); }
+    if (this.options.appendModifiers.Shift && e.shiftKey && e.key !== 'Shift') { modifier += this.convertKeyToSymbol('Shift'); }
+    this.currentChunk.textContent += modifier + (this.options.showSymbol ? this.convertKeyToSymbol(key) : key);
   }
 
   keyup(e) {

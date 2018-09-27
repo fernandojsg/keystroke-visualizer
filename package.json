@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/fernandojsg/keystroke-visualizer#readme",
   "devDependencies": {
-    "babel-core": "^6.26.3",
+    "@babel/core": "^7.1.0",
     "concurrently": "^4.0.1",
     "cross-env": "^5.2.0",
     "rollup": "^0.66.2",
@@ -29,8 +29,5 @@
     "rollup-plugin-cleanup": "^3.0.0",
     "rollup-plugin-commonjs": "^9.1.8",
     "rollup-plugin-node-resolve": "^3.4.0"
-  },
-  "dependencies": {
-    "useragent-info": "^1.0.0"
   }
 }
