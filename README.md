@@ -3,7 +3,7 @@ Visualize the keystrokes on the current page. Inspired by https://github.com/key
 
 ![keystroke visualizer in action](https://rawgit.com/fernandojsg/keystroke-visualizer/master/img/keystrokes.gif)
     
-# Usage
+# Usage
 
 ## NPM
 
@@ -17,7 +17,7 @@ import KeystrokeVisualizer from  'keystroke-visualizer';
 KeystrokeVisualizer.enable(options);
 ```
 
-# Browser
+## Browser
 
 ```html
 <script src="https://rawgit.com/fernandojsg/keystroke-visualizer/master/build/keystroke-visualizer.js"></script>
