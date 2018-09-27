@@ -2,7 +2,7 @@
   "name": "keystroke-visualizer",
   "version": "1.0.0",
   "description": "Keystroke visualizer",
-  "main": "index.js",
+  "main": "build/keystroke-visualizer.js",
   "scripts": {
     "build": "cross-env NODE_ENV=production rollup -c",
     "dev": "concurrently --names \"ROLLUP,SERVER\" -c \"bgGreen.bold,bgBlue.bold\" \"rollup -c -w -m inline\" \"http-server\""
