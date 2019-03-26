@@ -26,7 +26,6 @@ class KeystrokeVisualizer {
   cleanUp() {
     function removeNode(node) {
       if (node) {
-        debugger;
         node.parentNode.removeChild(node);
       }
     }
